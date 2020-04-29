@@ -1,0 +1,15 @@
+.container {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 750px;
+  margin-left: -375px;
+  height: 180px;
+  margin-top: -90px;
+
+  @media (max-width: 780px) {
+    width: 100%;
+    margin: 0 auto;
+    transform: translateX(-50%);
+  }
+}

@@ -1,0 +1,85 @@
+<div class="container">
+  <section class="title-wrapper">
+    <h1 class="title">Github<span class="title_second">Search</span></h1>
+    <div class="search-wrapper">
+      <app-search></app-search>
+    </div>
+  </section>
+  <section class="content-wrapper" *ngIf="!notFound">
+    <div class="profile-infos">
+      <img src="{{ userInfo.avatar_url }}" alt="user photo" class="userPhoto" />
+      <h2 class="infoName">{{ userInfo.name }}</h2>
+      <h3 class="userLogin">{{ userInfo.login }}</h3>
+      <div>
+        <h3>
+          <img
+            src="../../../assets/icons/organization_icon.svg"
+            class="info-logo"
+          />
+          {{ userInfo.company }}
+        </h3>
+        <h3>
+          <img
+            src="../../../assets/icons/location_icon.svg"
+            class="info-logo"
+          />
+          {{ userInfo.location }}
+        </h3>
+        <h3>
+          <img src="../../../assets/icons/star_icon.svg" class="info-logo" />
+          {{ starTotal }}
+        </h3>
+        <h3>
+          <img
+            src="../../../assets/icons/repositorie_icon.svg"
+            class="info-logo"
+          />
+          {{ userInfo.public_repos }}
+        </h3>
+        <h3>
+          <img
+            src="../../../assets/icons/followers_icon.svg"
+            class="info-logo"
+          />
+          {{ userInfo.followers }}
+        </h3>
+      </div>
+    </div>
+    <div class="repositories">
+      <div
+        class="repositories_item"
+        *ngFor="let repo of repoInfo | sort: 'stargazers_count'"
+      >
+        <h2 class="repoName">{{ repo.name }}</h2>
+        <p>{{ repo.description }}</p>
+        <img src="../../../assets/icons/star_icon.svg" alt="star icon" />
+        <span class="starTotal"> {{ repo.stargazers_count }}</span>
+      </div>
+      <div class="repositories_buttons">
+        <button
+          [disabled]="previousPage === 1"
+          (click)="getUserRepositories(userInfo.repos_url, 'prev')"
+          class="paginationBtn"
+        >
+          <img
+            class="paginationIcon"
+            src="../../../assets/icons/leftArrow_icon.svg"
+            alt=""
+          />
+          Prev
+        </button>
+        <button
+          (click)="getUserRepositories(userInfo.repos_url, 'next')"
+          class="paginationBtn"
+        >
+          Next
+          <img
+            class="paginationIcon"
+            src="../../../assets/icons/rightArrow_icon.svg"
+            alt=""
+          />
+        </button>
+      </div>
+    </div>
+  </section>
+</div>
