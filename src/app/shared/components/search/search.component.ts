@@ -13,7 +13,7 @@ export class SearchComponent implements OnInit {
   constructor(private router: Router) {}
 
   onKey(event: any) {
-    this.userInput = event.target.value;
+    this.userInput = (<HTMLInputElement>event.target).value;
   }
 
   getUserInfo() {

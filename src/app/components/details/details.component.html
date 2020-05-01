@@ -50,7 +50,7 @@
         class="repositories_item"
         *ngFor="let repo of repoInfo | sort: 'stargazers_count'"
       >
-        <h2 class="repoName">{{ repo.name }}</h2>
+        <h2 class="titlePurle">{{ repo.name }}</h2>
         <p>{{ repo.description }}</p>
         <img src="../../../assets/icons/star_icon.svg" alt="star icon" />
         <span class="starTotal"> {{ repo.stargazers_count }}</span>
@@ -82,4 +82,5 @@
       </div>
     </div>
   </section>
+  <h1 class="titlePurle errorMsg" *ngIf="notFound">User not found :(</h1>
 </div>

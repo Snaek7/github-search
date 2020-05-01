@@ -27,11 +27,18 @@ export class DetailsComponent implements OnInit {
     this.route.queryParams.subscribe((param: String) => {
       let userInput = param['userInput'];
 
-      this.githubService.getUserInfo(userInput).subscribe((data: User) => {
-        console.log('DATA', data);
-        this.userInfo = data;
-        this.getUserRepositories(data.repos_url, 'next');
-      });
+      this.githubService.getUserInfo(userInput).subscribe(
+        (data: User) => {
+          this.notFound = false;
+          this.userInfo = data;
+          this.getUserRepositories(data.repos_url, 'next');
+        },
+        (error) => {
+          if (error.status == 404) {
+            this.notFound = true;
+          }
+        }
+      );
     });
   }
 
@@ -41,23 +48,12 @@ export class DetailsComponent implements OnInit {
         url,
         direction === 'prev' ? this.previousPage : this.nextPage
       )
-      .subscribe(
-        (repos: Repo[]) => {
-          console.log('ENTROU PORRA', repos);
-
-          this.notFound = false;
-          this.repoInfo = repos;
-          this.starTotal = repos.reduce((acc, current) => {
-            return acc + current.stargazers_count;
-          }, 0);
-        },
-        (error) => {
-          console.log('ERROR', error);
-          if (error.status == 404) {
-            this.notFound = true;
-          }
-        }
-      );
+      .subscribe((repos: Repo[]) => {
+        this.repoInfo = repos;
+        this.starTotal = repos.reduce((acc, current) => {
+          return acc + current.stargazers_count;
+        }, 0);
+      });
     this.setPaginationDirections(direction);
   }
 
